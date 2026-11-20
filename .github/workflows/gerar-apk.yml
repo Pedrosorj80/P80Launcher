@@ -27,8 +27,23 @@ jobs:
                   applicationId 'br.eduarda.launcher'
                   minSdk 21
                   targetSdk 28
-                  versionCode 1
+                  versionCode((System.getenv('GITHUB_RUN_NUMBER') ?: '1') as Integer)
                   versionName '1.0'
+              }
+
+              signingConfigs {
+                  fixa {
+                      storeFile file('meulauncher.keystore')
+                      storePassword 'meulauncher'
+                      keyAlias 'meulauncher'
+                      keyPassword 'meulauncher'
+                  }
+              }
+
+              buildTypes {
+                  debug {
+                      signingConfig signingConfigs.fixa
+                  }
               }
 
               compileOptions {
@@ -41,6 +56,54 @@ jobs:
                   checkReleaseBuilds false
               }
           }
+          EOF_ARQUIVO
+          base64 -d > 'app/meulauncher.keystore' <<'EOF_ARQUIVO'
+          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
+          KJ9iBBSJOZJV2FwsLR4HD5wdFsA8m8d8UAICJxA=
           EOF_ARQUIVO
           mkdir -p 'app/src/main'
           cat > 'app/src/main/AndroidManifest.xml' <<'EOF_ARQUIVO'
@@ -102,12 +165,15 @@ jobs:
               public final String label;
               public final Drawable icon;
               public final Intent launchIntent;
+              /** true quando o ícone foi trocado por uma imagem escolhida pela usuária. */
+              public final boolean customImage;
 
-              public AppItem(String packageName, String label, Drawable icon, Intent launchIntent) {
+              public AppItem(String packageName, String label, Drawable icon, Intent launchIntent, boolean customImage) {
                   this.packageName = packageName;
                   this.label = label;
                   this.icon = icon;
                   this.launchIntent = launchIntent;
+                  this.customImage = customImage;
               }
           }
           EOF_ARQUIVO
@@ -174,7 +240,9 @@ jobs:
                               .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 
                       CharSequence label = ri.loadLabel(pm);
-                      map.put(pkg, new AppItem(pkg, label == null ? pkg : label.toString(), ri.loadIcon(pm), launch));
+                      android.graphics.drawable.Drawable custom = IconStore.load(ctx, pkg);
+                      android.graphics.drawable.Drawable icon = custom != null ? custom : ri.loadIcon(pm);
+                      map.put(pkg, new AppItem(pkg, label == null ? pkg : label.toString(), icon, launch, custom != null));
                   }
               }
 
@@ -245,7 +313,6 @@ jobs:
           cat > 'app/src/main/java/br/eduarda/launcher/AppsActivity.java' <<'EOF_ARQUIVO'
           package br.eduarda.launcher;
 
-          import android.app.Activity;
           import android.os.Bundle;
           import android.view.KeyEvent;
           import android.view.LayoutInflater;
@@ -257,13 +324,12 @@ jobs:
           import android.widget.GridView;
           import android.widget.ImageView;
           import android.widget.TextView;
-          import android.widget.Toast;
 
           import java.util.ArrayList;
           import java.util.List;
 
           /** Grade com todos os apps. Segurar OK coloca/tira o app da fileira. */
-          public class AppsActivity extends Activity {
+          public class AppsActivity extends LauncherActivity {
 
               private GridView grid;
               private final List<AppItem> apps = new ArrayList<>();
@@ -292,7 +358,7 @@ jobs:
                   grid.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                       @Override
                       public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                          toggle(position);
+                          showAppOptions(apps.get(position));
                           return true;
                       }
                   });
@@ -303,11 +369,7 @@ jobs:
               protected void onResume() {
                   super.onResume();
                   background.onResume();
-                  apps.clear();
-                  apps.addAll(AppRepository.loadAllApps(this));
-                  AppRepository.favoriteItems(this, apps); // garante a lista inicial
-                  favs = AppRepository.getFavorites(this);
-                  adapter.notifyDataSetChanged();
+                  reload();
               }
 
               @Override
@@ -322,20 +384,24 @@ jobs:
                   if (keyCode == KeyEvent.KEYCODE_MENU) {
                       int pos = grid.getSelectedItemPosition();
                       if (pos != GridView.INVALID_POSITION) {
-                          toggle(pos);
+                          showAppOptions(apps.get(pos));
                           return true;
                       }
                   }
                   return super.onKeyDown(keyCode, event);
               }
 
-              private void toggle(int position) {
-                  AppItem item = apps.get(position);
-                  boolean nowFav = AppRepository.toggleFavorite(this, item.packageName);
+              @Override
+              protected void onAppsChanged() {
+                  reload();
+              }
+
+              private void reload() {
+                  apps.clear();
+                  apps.addAll(AppRepository.loadAllApps(this));
+                  AppRepository.favoriteItems(this, apps); // garante a lista inicial
                   favs = AppRepository.getFavorites(this);
                   adapter.notifyDataSetChanged();
-                  Toast.makeText(this, item.label + (nowFav ? " entrou na fileira ★" : " saiu da fileira"),
-                          Toast.LENGTH_SHORT).show();
               }
 
               private class Adapter extends BaseAdapter {
@@ -361,7 +427,9 @@ jobs:
                           v = LayoutInflater.from(AppsActivity.this).inflate(R.layout.item_app, parent, false);
                       }
                       AppItem item = apps.get(position);
-                      ((ImageView) v.findViewById(R.id.icon)).setImageDrawable(item.icon);
+                      ImageView icon = v.findViewById(R.id.icon);
+                      icon.setImageDrawable(item.icon);
+                      icon.setScaleType(item.customImage ? ImageView.ScaleType.CENTER_CROP : ImageView.ScaleType.FIT_CENTER);
                       ((TextView) v.findViewById(R.id.label)).setText(item.label);
                       v.findViewById(R.id.star).setVisibility(
                               favs.contains(item.packageName) ? View.VISIBLE : View.INVISIBLE);
@@ -671,12 +739,14 @@ jobs:
           package br.eduarda.launcher;
 
           import android.content.Context;
+          import android.graphics.Outline;
           import android.graphics.drawable.Drawable;
           import android.util.AttributeSet;
           import android.util.TypedValue;
           import android.view.Gravity;
           import android.view.KeyEvent;
           import android.view.View;
+          import android.view.ViewOutlineProvider;
           import android.widget.ImageView;
           import android.widget.LinearLayout;
 
@@ -751,6 +821,29 @@ jobs:
                           getResources().getDisplayMetrics());
               }
 
+              /** Tamanho do quadro de cada app, ajustado ao espaço disponível na tela. */
+              private int slotSize() {
+                  int size = dp(SLOT_DP);
+                  int h = getHeight();
+                  int w = getWidth();
+                  if (h > 0) size = Math.min(size, (int) (h / 1.35f)); // o do meio cresce 25%
+                  if (w > 0) size = Math.min(size, w / MAX_VISIBLE - 2 * dp(MARGIN_DP));
+                  return Math.max(size, dp(48));
+              }
+
+              @Override
+              protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+                  super.onSizeChanged(w, h, oldw, oldh);
+                  if (w != oldw || h != oldh) {
+                      post(new Runnable() {
+                          @Override
+                          public void run() {
+                              rebuild();
+                          }
+                      });
+                  }
+              }
+
               private int visibleCount() {
                   int n = items.size();
                   if (n == 0) return 0;
@@ -766,12 +859,17 @@ jobs:
                   removeAllViews();
                   slots.clear();
                   int v = visibleCount();
-                  int size = dp(SLOT_DP);
+                  int size = slotSize();
                   for (int i = 0; i < v; i++) {
                       ImageView iv = new ImageView(getContext());
-                      iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                      int pad = dp(16);
-                      iv.setPadding(pad, pad, pad, pad);
+                      final int radius = dp(18);
+                      iv.setOutlineProvider(new ViewOutlineProvider() {
+                          @Override
+                          public void getOutline(View view, Outline outline) {
+                              outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), radius);
+                          }
+                      });
+                      iv.setClipToOutline(true);
                       LayoutParams lp = new LayoutParams(size, size);
                       lp.leftMargin = dp(MARGIN_DP);
                       lp.rightMargin = dp(MARGIN_DP);
@@ -804,11 +902,22 @@ jobs:
               private void refresh(int direction) {
                   int v = slots.size();
                   int half = v / 2;
-                  int step = dp(SLOT_DP + 2 * MARGIN_DP);
+                  int step = slotSize() + 2 * dp(MARGIN_DP);
                   for (int i = 0; i < v; i++) {
                       int idx = mod(center - half + i, items.size());
                       ImageView iv = slots.get(i);
-                      iv.setImageDrawable(copyOf(items.get(idx).icon));
+                      AppItem item = items.get(idx);
+                      iv.setImageDrawable(copyOf(item.icon));
+                      if (item.customImage) {
+                          // Imagem escolhida: ocupa o quadro todo
+                          iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                          int pad = dp(4);
+                          iv.setPadding(pad, pad, pad, pad);
+                      } else {
+                          iv.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                          int pad = dp(16);
+                          iv.setPadding(pad, pad, pad, pad);
+                      }
 
                       int dist = Math.abs(i - half);
                       float scale = dist == 0 ? 1.25f : (dist == 1 ? 0.9f : 0.7f);
@@ -846,11 +955,282 @@ jobs:
           }
           EOF_ARQUIVO
           mkdir -p 'app/src/main/java/br/eduarda/launcher'
-          cat > 'app/src/main/java/br/eduarda/launcher/MainActivity.java' <<'EOF_ARQUIVO'
+          cat > 'app/src/main/java/br/eduarda/launcher/IconStore.java' <<'EOF_ARQUIVO'
+          package br.eduarda.launcher;
+
+          import android.content.Context;
+          import android.graphics.Bitmap;
+          import android.graphics.BitmapFactory;
+          import android.graphics.drawable.BitmapDrawable;
+          import android.graphics.drawable.Drawable;
+
+          import java.io.File;
+          import java.io.FileOutputStream;
+          import java.io.IOException;
+          import java.io.InputStream;
+          import java.io.OutputStream;
+
+          /** Guarda as imagens que substituem os ícones dos apps. */
+          public final class IconStore {
+
+              private static final int MAX_PX = 512;
+
+              private IconStore() { }
+
+              private static File file(Context ctx, String pkg) {
+                  File dir = new File(ctx.getFilesDir(), "icones");
+                  if (!dir.exists()) dir.mkdirs();
+                  return new File(dir, pkg + ".img");
+              }
+
+              public static boolean has(Context ctx, String pkg) {
+                  return file(ctx, pkg).exists();
+              }
+
+              public static void clear(Context ctx, String pkg) {
+                  file(ctx, pkg).delete();
+              }
+
+              public static boolean save(Context ctx, String pkg, InputStream in) {
+                  if (in == null) return false;
+                  File dest = file(ctx, pkg);
+                  File tmp = new File(dest.getParentFile(), pkg + ".tmp");
+                  OutputStream out = null;
+                  try {
+                      out = new FileOutputStream(tmp);
+                      byte[] buf = new byte[16 * 1024];
+                      int n;
+                      while ((n = in.read(buf)) > 0) out.write(buf, 0, n);
+                      out.close();
+                      out = null;
+                      BitmapFactory.Options o = new BitmapFactory.Options();
+                      o.inJustDecodeBounds = true;
+                      BitmapFactory.decodeFile(tmp.getAbsolutePath(), o);
+                      if (o.outWidth <= 0 || o.outHeight <= 0) {
+                          tmp.delete();
+                          return false;
+                      }
+                      dest.delete();
+                      return tmp.renameTo(dest);
+                  } catch (IOException e) {
+                      tmp.delete();
+                      return false;
+                  } finally {
+                      try { in.close(); } catch (IOException ignored) { }
+                      if (out != null) try { out.close(); } catch (IOException ignored) { }
+                  }
+              }
+
+              public static Drawable load(Context ctx, String pkg) {
+                  File f = file(ctx, pkg);
+                  if (!f.exists()) return null;
+                  BitmapFactory.Options o = new BitmapFactory.Options();
+                  o.inJustDecodeBounds = true;
+                  BitmapFactory.decodeFile(f.getAbsolutePath(), o);
+                  int sample = 1;
+                  while (o.outWidth / (sample * 2) >= MAX_PX && o.outHeight / (sample * 2) >= MAX_PX) sample *= 2;
+                  o.inJustDecodeBounds = false;
+                  o.inSampleSize = sample;
+                  try {
+                      Bitmap b = BitmapFactory.decodeFile(f.getAbsolutePath(), o);
+                      return b == null ? null : new BitmapDrawable(ctx.getResources(), b);
+                  } catch (OutOfMemoryError e) {
+                      return null;
+                  }
+              }
+          }
+          EOF_ARQUIVO
+          mkdir -p 'app/src/main/java/br/eduarda/launcher'
+          cat > 'app/src/main/java/br/eduarda/launcher/LauncherActivity.java' <<'EOF_ARQUIVO'
           package br.eduarda.launcher;
 
           import android.Manifest;
           import android.app.Activity;
+          import android.app.AlertDialog;
+          import android.content.ActivityNotFoundException;
+          import android.content.Intent;
+          import android.content.pm.PackageManager;
+          import android.net.Uri;
+          import android.os.Build;
+          import android.os.Bundle;
+          import android.os.Environment;
+          import android.widget.Toast;
+
+          import java.io.File;
+          import java.io.FileInputStream;
+          import java.io.IOException;
+          import java.io.InputStream;
+          import java.util.ArrayList;
+          import java.util.Arrays;
+          import java.util.List;
+          import java.util.Locale;
+
+          /**
+           * Base das telas do launcher: menu de opções de cada app
+           * (fileira e imagem personalizada).
+           */
+          public abstract class LauncherActivity extends Activity {
+
+              private static final int REQ_ICON_PICK = 10;
+              private static final int REQ_ICON_STORAGE = 11;
+              private static final String KEY_PENDING = "pendingIconPkg";
+
+              private String pendingIconPkg;
+
+              /** Chamado quando a fileira ou alguma imagem de app mudou. */
+              protected abstract void onAppsChanged();
+
+              private interface Opener {
+                  InputStream open() throws IOException;
+              }
+
+              @Override
+              protected void onCreate(Bundle savedInstanceState) {
+                  super.onCreate(savedInstanceState);
+                  if (savedInstanceState != null) pendingIconPkg = savedInstanceState.getString(KEY_PENDING);
+              }
+
+              @Override
+              protected void onSaveInstanceState(Bundle outState) {
+                  super.onSaveInstanceState(outState);
+                  outState.putString(KEY_PENDING, pendingIconPkg);
+              }
+
+              protected void showAppOptions(final AppItem item) {
+                  if (item == null) return;
+                  boolean fav = AppRepository.getFavorites(this).contains(item.packageName);
+                  final List<String> labels = new ArrayList<>();
+                  final List<Integer> actions = new ArrayList<>();
+                  labels.add(fav ? "Tirar da fileira" : "Colocar na fileira ★");
+                  actions.add(0);
+                  labels.add("Trocar imagem (galeria / arquivos)");
+                  actions.add(1);
+                  labels.add("Trocar imagem (pasta Download)");
+                  actions.add(2);
+                  if (item.customImage) {
+                      labels.add("Voltar ao ícone original");
+                      actions.add(3);
+                  }
+
+                  new AlertDialog.Builder(this)
+                          .setTitle(item.label)
+                          .setItems(labels.toArray(new String[0]), (d, which) -> {
+                              switch (actions.get(which)) {
+                                  case 0:
+                                      boolean now = AppRepository.toggleFavorite(this, item.packageName);
+                                      Toast.makeText(this, item.label + (now ? " entrou na fileira ★" : " saiu da fileira"),
+                                              Toast.LENGTH_SHORT).show();
+                                      onAppsChanged();
+                                      break;
+                                  case 1:
+                                      pendingIconPkg = item.packageName;
+                                      pickFromGallery();
+                                      break;
+                                  case 2:
+                                      pendingIconPkg = item.packageName;
+                                      pickFromDownloadWithPermission();
+                                      break;
+                                  default:
+                                      IconStore.clear(this, item.packageName);
+                                      onAppsChanged();
+                              }
+                          })
+                          .show();
+              }
+
+              private void pickFromGallery() {
+                  Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                  i.setType("image/*");
+                  i.addCategory(Intent.CATEGORY_OPENABLE);
+                  if (i.resolveActivity(getPackageManager()) != null) {
+                      try {
+                          startActivityForResult(i, REQ_ICON_PICK);
+                          return;
+                      } catch (ActivityNotFoundException ignored) { }
+                  }
+                  Toast.makeText(this, "Sua TV box não tem seletor de imagens. Use a opção da pasta Download.",
+                          Toast.LENGTH_LONG).show();
+              }
+
+              private void pickFromDownloadWithPermission() {
+                  if (Build.VERSION.SDK_INT >= 23
+                          && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                          != PackageManager.PERMISSION_GRANTED) {
+                      requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQ_ICON_STORAGE);
+                      return;
+                  }
+                  showDownloadImages();
+              }
+
+              private void showDownloadImages() {
+                  File dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                  File[] found = dir.listFiles(f -> {
+                      String n = f.getName().toLowerCase(Locale.ROOT);
+                      return f.isFile() && (n.endsWith(".jpg") || n.endsWith(".jpeg") || n.endsWith(".png")
+                              || n.endsWith(".webp") || n.endsWith(".gif"));
+                  });
+                  if (found == null || found.length == 0) {
+                      Toast.makeText(this, "Coloque imagens (.jpg ou .png) em " + dir.getAbsolutePath(),
+                              Toast.LENGTH_LONG).show();
+                      return;
+                  }
+                  final File[] files = found;
+                  Arrays.sort(files, (a, b) -> a.getName().compareToIgnoreCase(b.getName()));
+                  String[] names = new String[files.length];
+                  for (int i = 0; i < files.length; i++) names[i] = files[i].getName();
+
+                  new AlertDialog.Builder(this)
+                          .setTitle("Escolha a imagem")
+                          .setItems(names, (d, which) -> importIcon(() -> new FileInputStream(files[which])))
+                          .show();
+              }
+
+              private void importIcon(final Opener opener) {
+                  final String pkg = pendingIconPkg;
+                  if (pkg == null) return;
+                  new Thread(() -> {
+                      boolean ok;
+                      try {
+                          ok = IconStore.save(this, pkg, opener.open());
+                      } catch (IOException | SecurityException e) {
+                          ok = false;
+                      }
+                      final boolean result = ok;
+                      runOnUiThread(() -> {
+                          Toast.makeText(this, result ? "Imagem aplicada!" : "Não consegui usar essa imagem",
+                                  Toast.LENGTH_SHORT).show();
+                          if (result) onAppsChanged();
+                      });
+                  }).start();
+              }
+
+              @Override
+              protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+                  super.onActivityResult(requestCode, resultCode, data);
+                  if (requestCode == REQ_ICON_PICK && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                      final Uri uri = data.getData();
+                      importIcon(() -> getContentResolver().openInputStream(uri));
+                  }
+              }
+
+              @Override
+              public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+                  super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+                  if (requestCode == REQ_ICON_STORAGE) {
+                      if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                          showDownloadImages();
+                      } else {
+                          Toast.makeText(this, "Sem permissão para ler a pasta Download", Toast.LENGTH_LONG).show();
+                      }
+                  }
+              }
+          }
+          EOF_ARQUIVO
+          mkdir -p 'app/src/main/java/br/eduarda/launcher'
+          cat > 'app/src/main/java/br/eduarda/launcher/MainActivity.java' <<'EOF_ARQUIVO'
+          package br.eduarda.launcher;
+
+          import android.Manifest;
           import android.app.AlertDialog;
           import android.app.WallpaperManager;
           import android.content.ActivityNotFoundException;
@@ -866,6 +1246,7 @@ jobs:
           import android.provider.Settings;
           import android.view.TextureView;
           import android.view.View;
+          import android.view.ViewGroup;
           import android.widget.ImageView;
           import android.widget.TextView;
           import android.widget.Toast;
@@ -879,7 +1260,7 @@ jobs:
           import java.util.List;
           import java.util.Locale;
 
-          public class MainActivity extends Activity {
+          public class MainActivity extends LauncherActivity {
 
               private static final int REQ_PICK_IMAGE = 1;
               private static final int REQ_STORAGE = 2;
@@ -931,7 +1312,7 @@ jobs:
                   carousel.setOnLongClickListener(new View.OnLongClickListener() {
                       @Override
                       public boolean onLongClick(View v) {
-                          confirmRemove(carousel.getCenterItem());
+                          showAppOptions(carousel.getCenterItem());
                           return true;
                       }
                   });
@@ -958,6 +1339,12 @@ jobs:
                           }
                       }
                   });
+
+                  // Sobe a barra de ícones 10% da altura da tela
+                  View bottomBar = findViewById(R.id.bottomBar);
+                  ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams) bottomBar.getLayoutParams();
+                  lp.bottomMargin = (int) (getResources().getDisplayMetrics().heightPixels * 0.10f);
+                  bottomBar.setLayoutParams(lp);
 
                   carousel.requestFocus();
               }
@@ -999,20 +1386,9 @@ jobs:
                   startActivity(new Intent(this, AppsActivity.class));
               }
 
-              private void confirmRemove(final AppItem item) {
-                  if (item == null) return;
-                  new AlertDialog.Builder(this)
-                          .setTitle(item.label)
-                          .setMessage("Tirar este app da fileira?")
-                          .setPositiveButton("Tirar", new DialogInterface.OnClickListener() {
-                              @Override
-                              public void onClick(DialogInterface d, int w) {
-                                  AppRepository.toggleFavorite(MainActivity.this, item.packageName);
-                                  reloadApps();
-                              }
-                          })
-                          .setNegativeButton("Cancelar", null)
-                          .show();
+              @Override
+              protected void onAppsChanged() {
+                  reloadApps();
               }
 
               // ---------- Relógio e data ----------
@@ -1235,6 +1611,19 @@ jobs:
           </shape>
           EOF_ARQUIVO
           mkdir -p 'app/src/main/res/drawable'
+          cat > 'app/src/main/res/drawable/ic_apps.xml' <<'EOF_ARQUIVO'
+          <?xml version="1.0" encoding="utf-8"?>
+          <vector xmlns:android="http://schemas.android.com/apk/res/android"
+              android:width="24dp"
+              android:height="24dp"
+              android:viewportWidth="24"
+              android:viewportHeight="24">
+              <path
+                  android:fillColor="#FFFFFF"
+                  android:pathData="M4,8h4V4H4v4zM10,20h4v-4h-4v4zM4,20h4v-4H4v4zM4,14h4v-4H4v4zM10,14h4v-4h-4v4zM16,4v4h4V4h-4zM10,8h4V4h-4v4zM16,14h4v-4h-4v4zM16,20h4v-4h-4v4z" />
+          </vector>
+          EOF_ARQUIVO
+          mkdir -p 'app/src/main/res/drawable'
           cat > 'app/src/main/res/drawable/ic_launcher.xml' <<'EOF_ARQUIVO'
           <?xml version="1.0" encoding="utf-8"?>
           <vector xmlns:android="http://schemas.android.com/apk/res/android"
@@ -1248,6 +1637,32 @@ jobs:
               <path
                   android:fillColor="#FFFFFF"
                   android:pathData="M24,12L10,24H14V36H21V28H27V36H34V24H38Z" />
+          </vector>
+          EOF_ARQUIVO
+          mkdir -p 'app/src/main/res/drawable'
+          cat > 'app/src/main/res/drawable/ic_settings.xml' <<'EOF_ARQUIVO'
+          <?xml version="1.0" encoding="utf-8"?>
+          <vector xmlns:android="http://schemas.android.com/apk/res/android"
+              android:width="24dp"
+              android:height="24dp"
+              android:viewportWidth="24"
+              android:viewportHeight="24">
+              <path
+                  android:fillColor="#FFFFFF"
+                  android:pathData="M19.14,12.94c0.04,-0.3 0.06,-0.61 0.06,-0.94c0,-0.32 -0.02,-0.64 -0.07,-0.94l2.03,-1.58c0.18,-0.14 0.23,-0.41 0.12,-0.61l-1.92,-3.32c-0.12,-0.22 -0.37,-0.29 -0.59,-0.22l-2.39,0.96c-0.5,-0.38 -1.03,-0.7 -1.62,-0.94L14.4,2.81c-0.04,-0.24 -0.24,-0.41 -0.48,-0.41h-3.84c-0.24,0 -0.43,0.17 -0.47,0.41L9.25,5.35C8.66,5.59 8.12,5.92 7.63,6.29L5.24,5.33c-0.22,-0.08 -0.47,0 -0.59,0.22L2.74,8.87C2.62,9.08 2.66,9.34 2.86,9.48l2.03,1.58C4.84,11.36 4.8,11.69 4.8,12s0.02,0.64 0.07,0.94l-2.03,1.58c-0.18,0.14 -0.23,0.41 -0.12,0.61l1.92,3.32c0.12,0.22 0.37,0.29 0.59,0.22l2.39,-0.96c0.5,0.38 1.03,0.7 1.62,0.94l0.36,2.54c0.05,0.24 0.24,0.41 0.48,0.41h3.84c0.24,0 0.44,-0.17 0.47,-0.41l0.36,-2.54c0.59,-0.24 1.13,-0.56 1.62,-0.94l2.39,0.96c0.22,0.08 0.47,0 0.59,-0.22l1.92,-3.32c0.12,-0.22 0.07,-0.47 -0.12,-0.61L19.14,12.94zM12,15.6c-1.98,0 -3.6,-1.62 -3.6,-3.6s1.62,-3.6 3.6,-3.6s3.6,1.62 3.6,3.6S13.98,15.6 12,15.6z" />
+          </vector>
+          EOF_ARQUIVO
+          mkdir -p 'app/src/main/res/drawable'
+          cat > 'app/src/main/res/drawable/ic_wallpaper.xml' <<'EOF_ARQUIVO'
+          <?xml version="1.0" encoding="utf-8"?>
+          <vector xmlns:android="http://schemas.android.com/apk/res/android"
+              android:width="24dp"
+              android:height="24dp"
+              android:viewportWidth="24"
+              android:viewportHeight="24">
+              <path
+                  android:fillColor="#FFFFFF"
+                  android:pathData="M21,19V5c0,-1.1 -0.9,-2 -2,-2H5c-1.1,0 -2,0.9 -2,2v14c0,1.1 0.9,2 2,2h14c1.1,0 2,-0.9 2,-2zM8.5,13.5l2.5,3.01L14.5,12l4.5,6H5l3.5,-4.5z" />
           </vector>
           EOF_ARQUIVO
           mkdir -p 'app/src/main/res/drawable'
@@ -1330,7 +1745,7 @@ jobs:
                       android:layout_width="wrap_content"
                       android:layout_height="wrap_content"
                       android:layout_marginBottom="16dp"
-                      android:text="OK abre o app  •  segurar OK (ou botão MENU) coloca/tira da fileira ★"
+                      android:text="OK abre o app  •  segurar OK (ou MENU): fileira ★ e trocar imagem"
                       android:textColor="#AAFFFFFF"
                       android:textSize="15sp" />
 
@@ -1378,7 +1793,10 @@ jobs:
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
                   android:orientation="vertical"
-                  android:padding="48dp">
+                  android:paddingLeft="48dp"
+                  android:paddingRight="48dp"
+                  android:paddingTop="24dp"
+                  android:paddingBottom="8dp">
 
                   <TextView
                       android:id="@+id/clock"
@@ -1388,7 +1806,7 @@ jobs:
                       android:shadowColor="#AA000000"
                       android:shadowRadius="6"
                       android:textColor="#FFFFFF"
-                      android:textSize="72sp" />
+                      android:textSize="50sp" />
 
                   <TextView
                       android:id="@+id/date"
@@ -1397,63 +1815,50 @@ jobs:
                       android:shadowColor="#AA000000"
                       android:shadowRadius="6"
                       android:textColor="#E6FFFFFF"
-                      android:textSize="22sp" />
-
-                  <View
-                      android:layout_width="match_parent"
-                      android:layout_height="0dp"
-                      android:layout_weight="1" />
+                      android:textSize="15sp" />
 
                   <br.eduarda.launcher.CarouselView
                       android:id="@+id/carousel"
                       android:layout_width="match_parent"
-                      android:layout_height="230dp" />
+                      android:layout_height="0dp"
+                      android:layout_weight="1" />
 
                   <TextView
                       android:id="@+id/carouselLabel"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
-                      android:layout_marginTop="8dp"
+                      android:layout_marginBottom="12dp"
                       android:gravity="center"
+                      android:maxLines="1"
                       android:shadowColor="#AA000000"
                       android:shadowRadius="6"
                       android:textColor="#FFFFFF"
-                      android:textSize="26sp" />
-
-                  <TextView
-                      android:id="@+id/carouselHint"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:gravity="center"
-                      android:text="◀ ▶ girar    •    OK abrir    •    segurar OK remover da fileira"
-                      android:textColor="#AAFFFFFF"
-                      android:textSize="14sp" />
-
-                  <View
-                      android:layout_width="match_parent"
-                      android:layout_height="0dp"
-                      android:layout_weight="1" />
+                      android:textSize="22sp" />
 
                   <LinearLayout
+                      android:id="@+id/bottomBar"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"
                       android:gravity="center"
                       android:orientation="horizontal">
 
-                      <TextView
+                      <ImageView
                           android:id="@+id/btnApps"
-                          style="@style/MenuButton"
-                          android:text="Todos os apps" />
+                          style="@style/MenuIconButton"
+                          android:contentDescription="Todos os apps"
+                          android:src="@drawable/ic_apps" />
 
-                      <TextView
+                      <ImageView
                           android:id="@+id/btnWallpaper"
-                          style="@style/MenuButton"
-                          android:text="Papel de parede" />
+                          style="@style/MenuIconButton"
+                          android:contentDescription="Papel de parede"
+                          android:src="@drawable/ic_wallpaper" />
 
-                      <TextView
+                      <ImageView
                           android:id="@+id/btnSettings"
-                          style="@style/MenuButton"
-                          android:text="Configurações" />
+                          style="@style/MenuIconButton"
+                          android:contentDescription="Configurações"
+                          android:src="@drawable/ic_settings" />
                   </LinearLayout>
               </LinearLayout>
           </FrameLayout>
@@ -1523,6 +1928,18 @@ jobs:
                   <item name="android:clickable">true</item>
                   <item name="android:textColor">#FFFFFF</item>
                   <item name="android:textSize">18sp</item>
+              </style>
+
+              <style name="MenuIconButton">
+                  <item name="android:layout_width">60dp</item>
+                  <item name="android:layout_height">60dp</item>
+                  <item name="android:layout_marginLeft">16dp</item>
+                  <item name="android:layout_marginRight">16dp</item>
+                  <item name="android:padding">14dp</item>
+                  <item name="android:scaleType">fitCenter</item>
+                  <item name="android:background">@drawable/item_bg</item>
+                  <item name="android:focusable">true</item>
+                  <item name="android:clickable">true</item>
               </style>
           </resources>
           EOF_ARQUIVO
